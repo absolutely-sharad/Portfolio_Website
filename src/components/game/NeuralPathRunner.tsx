@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { sound } from './VillageRunAudio.ts';
+import { sound } from './NeuralPathAudio.ts';
 import {
   Volume2,
   VolumeX,
@@ -18,7 +18,7 @@ import {
   Minimize2,
 } from 'lucide-react';
 
-interface VillageRunGameProps {
+interface NeuralPathRunnerProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -27,7 +27,7 @@ type GameState = 'title' | 'playing' | 'paused' | 'gameover' | 'victory';
 
 const LANES = [-2.6, 0, 2.6];
 
-export const VillageRunGame: React.FC<VillageRunGameProps> = ({ isOpen, onClose }) => {
+export const NeuralPathRunner: React.FC<NeuralPathRunnerProps> = ({ isOpen, onClose }) => {
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const resetEntitiesRef = useRef<() => void>(() => {});
 
@@ -38,7 +38,12 @@ export const VillageRunGame: React.FC<VillageRunGameProps> = ({ isOpen, onClose 
   const [multiplier, setMultiplier] = useState<number>(1);
   const [shields, setShields] = useState<number>(3);
   const [highScore, setHighScore] = useState<number>(() => {
-    return parseInt(localStorage.getItem('sharad_villagerun_highscore') || '0', 10);
+    return parseInt(
+      localStorage.getItem('sharad_neuralpath_highscore') ||
+      localStorage.getItem('sharad_villagerun_highscore') ||
+      '0',
+      10
+    );
   });
   const [isMuted, setIsMuted] = useState<boolean>(sound.isMuted);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -595,6 +600,7 @@ export const VillageRunGame: React.FC<VillageRunGameProps> = ({ isOpen, onClose 
               sound.playGameOver();
               if (state.score > highScore) {
                 setHighScore(state.score);
+                localStorage.setItem('sharad_neuralpath_highscore', state.score.toString());
                 localStorage.setItem('sharad_villagerun_highscore', state.score.toString());
               }
             }
@@ -831,10 +837,10 @@ export const VillageRunGame: React.FC<VillageRunGameProps> = ({ isOpen, onClose 
             </div>
 
             <h1 className="text-3xl font-black text-white tracking-tight uppercase mb-1">
-              Village Run 3D
+              Neural Path Runner
             </h1>
             <p className="text-xs font-mono text-[#38BDF8] tracking-widest uppercase mb-4">
-              Cyberpunk Speeder Arcade · 60 FPS Three.js
+              Cybernetic Highway · Procedural WebGL Engine
             </p>
 
             <p className="text-xs text-slate-300 leading-relaxed mb-6">

@@ -1,4 +1,4 @@
-// Procedural Web Audio API sound synthesizer for Village Run 3D
+// Procedural Web Audio API sound synthesizer for Neural Path Runner 3D
 // Zero external MP3/WAV dependencies - 100% synthesized in real time
 
 class SoundEngine {

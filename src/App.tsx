@@ -13,7 +13,7 @@ import { RecruiterView } from './components/RecruiterView.tsx';
 import { AskSharadAssistant } from './components/AskSharadAssistant.tsx';
 import { ResumeModal } from './components/ResumeModal.tsx';
 import { ProjectModal } from './components/ProjectModal.tsx';
-import { VillageRunGame } from './components/game/VillageRunGame.tsx';
+import { NeuralPathRunner } from './components/game/NeuralPathRunner.tsx';
 import { VideoStudioModal } from './components/VideoStudioModal.tsx';
 import { ModelInspectorModal } from './components/models/ModelInspectorModal.tsx';
 import { ThemeProvider, useTheme } from './context/ThemeContext.tsx';
@@ -131,8 +131,8 @@ function MainPortfolio() {
         onClose={() => setActiveModalProject(null)}
       />
 
-      {/* Interactive 3D Village Run Game Shell */}
-      <VillageRunGame
+      {/* Interactive 3D Neural Path Runner Game Shell */}
+      <NeuralPathRunner
         isOpen={isGameOpen}
         onClose={() => setIsGameOpen(false)}
       />
