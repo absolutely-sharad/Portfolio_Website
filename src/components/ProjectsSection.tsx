@@ -2,13 +2,22 @@ import React, { useState, useRef } from 'react';
 import { portfolioData, Project } from '../data/portfolio.ts';
 import { ExternalLink, Github, ArrowUpRight, Sparkles, Layers } from 'lucide-react';
 import { ProjectModal } from './ProjectModal.tsx';
+import { ProjectPlanet3D } from './models/ProjectPlanet3D.tsx';
+import { motion } from 'framer-motion';
 
 interface TiltCardProps {
   project: Project;
   onSelect: (p: Project) => void;
+  onLaunchGame?: () => void;
+  onOpenModelInspector?: (index?: number) => void;
 }
 
-const TiltCard: React.FC<TiltCardProps> = ({ project, onSelect }) => {
+const TiltCard: React.FC<TiltCardProps> = ({
+  project,
+  onSelect,
+  onLaunchGame,
+  onOpenModelInspector,
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [style, setStyle] = useState<React.CSSProperties>({});
   const [glareStyle, setGlareStyle] = useState<React.CSSProperties>({ opacity: 0 });
@@ -46,6 +55,8 @@ const TiltCard: React.FC<TiltCardProps> = ({ project, onSelect }) => {
     setGlareStyle({ opacity: 0, transition: 'opacity 0.4s ease-out' });
   };
 
+  const isVillageRun = project.id === 'village-run';
+
   return (
     <div
       ref={cardRef}
@@ -79,6 +90,35 @@ const TiltCard: React.FC<TiltCardProps> = ({ project, onSelect }) => {
             <span>Explore</span>
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
+        </div>
+
+        {/* 3D Interactive Project Planet / Artifact Window */}
+        <div className="relative w-full h-36 mb-4 rounded-xl bg-gradient-to-b from-black/50 to-black/20 border border-white/5 overflow-hidden flex items-center justify-center group-hover:border-[#38BDF8]/30 transition-colors">
+          <div className="absolute top-2 left-2 text-[10px] font-mono text-slate-500 z-10 flex items-center gap-1.5 bg-black/40 px-2 py-0.5 rounded-full border border-white/5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse" />
+            <span>3D ARTIFACT</span>
+          </div>
+
+          {onOpenModelInspector && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenModelInspector(isVillageRun ? 0 : project.id.includes('study') ? 1 : 2);
+              }}
+              className="absolute top-2 right-2 text-[10px] font-mono text-[#38BDF8] z-10 flex items-center gap-1 bg-[#38BDF8]/15 hover:bg-[#38BDF8]/25 px-2 py-0.5 rounded-full border border-[#38BDF8]/30 transition-colors"
+              title="Inspect 3D composite model with studio lighting"
+            >
+              <Layers className="w-3 h-3" />
+              <span>Inspect 3D</span>
+            </button>
+          )}
+
+          <ProjectPlanet3D
+            projectId={project.id}
+            category={project.category}
+            accent={project.accent}
+          />
         </div>
 
         {/* Project Title */}
@@ -118,36 +158,60 @@ const TiltCard: React.FC<TiltCardProps> = ({ project, onSelect }) => {
           )}
         </div>
 
-        {/* Links (Prevent card modal trigger when clicked directly) */}
-        <div className="flex items-center gap-3 pt-2">
-          <a
-            href={project.liveDemo}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-1.5 text-xs font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
-          >
-            <span>Live Demo</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
-          <span aria-hidden="true" className="text-slate-600">·</span>
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors"
-          >
-            <Github className="w-3 h-3" />
-            <span>GitHub</span>
-          </a>
+        {/* Links & Direct Arcade Launcher */}
+        <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-3">
+            <a
+              href={project.liveDemo}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1.5 text-xs font-semibold text-[#38BDF8] hover:text-[#7dd3fc] transition-colors"
+            >
+              <span>Live Demo</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <span aria-hidden="true" className="text-slate-600">·</span>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-1.5 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+            >
+              <Github className="w-3 h-3" />
+              <span>GitHub</span>
+            </a>
+          </div>
+
+          {isVillageRun && onLaunchGame && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onLaunchGame();
+              }}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#38BDF8] hover:bg-[#7dd3fc] text-[#08090C] font-bold text-xs shadow-[0_0_12px_rgba(56,189,248,0.35)] transition-all"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>Play 3D</span>
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export const ProjectsSection: React.FC = () => {
+interface ProjectsSectionProps {
+  onLaunchGame?: () => void;
+  onOpenModelInspector?: (index?: number) => void;
+}
+
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
+  onLaunchGame,
+  onOpenModelInspector,
+}) => {
   const { projects } = portfolioData;
   const [filter, setFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -163,7 +227,13 @@ export const ProjectsSection: React.FC = () => {
     <section id="projects" className="py-20 border-t border-white/[0.06] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading & Category Filter Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+        >
           <div>
             <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase mb-2">
               03 · Featured Engineering
@@ -193,16 +263,26 @@ export const ProjectsSection: React.FC = () => {
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* 3D Interactive Project Card Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project) => (
-            <TiltCard
+          {filteredProjects.map((project, idx) => (
+            <motion.div
               key={project.id}
-              project={project}
-              onSelect={setSelectedProject}
-            />
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: (idx % 3) * 0.1 }}
+              className="h-full flex"
+            >
+              <TiltCard
+                project={project}
+                onSelect={setSelectedProject}
+                onLaunchGame={onLaunchGame}
+                onOpenModelInspector={onOpenModelInspector}
+              />
+            </motion.div>
           ))}
         </div>
 

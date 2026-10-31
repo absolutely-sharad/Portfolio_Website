@@ -38,14 +38,18 @@ interface AskSharadAssistantProps {
   onNavigateToSection: (sectionId: string) => void;
   onOpenProjectModal: (project: Project) => void;
   onOpenResumeModal: () => void;
+  onLaunchGame?: () => void;
+  onOpenVideoStudio?: () => void;
+  onOpenModelInspector?: () => void;
 }
 
 const STARTER_PROMPTS = [
   'Why hire Sharad?',
-  'Show AI projects',
+  'Play Village Run 3D',
+  'Generate AI Video Reel',
+  'Inspect 3D Models',
   'What did he build at Infonix Cloud?',
-  'Take me to experience',
-  'Is he available for hire?',
+  'Show AI projects',
   'Download resume',
 ];
 
@@ -56,13 +60,16 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
   onNavigateToSection,
   onOpenProjectModal,
   onOpenResumeModal,
+  onLaunchGame,
+  onOpenVideoStudio,
+  onOpenModelInspector,
 }) => {
   const [messages, setMessages] = useState<Message[]>(() => {
     return [
       {
         id: 'welcome',
         sender: 'assistant',
-        text: "Hi! I'm Sharad's AI Assistant. I can answer technical questions about his work, impact numbers, and systems architecture, or navigate the portfolio for you.",
+        text: "Hi! I'm Sharad's AI Assistant (powered by Gemini 3.8 Flash). I can answer questions about his systems, explain his autonomous AI agent architectures, launch the 3D Village Run arcade, or render AI video reels with Omni Flash.",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ];
@@ -158,7 +165,31 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
     const cards: any[] = [];
     const lower = query.toLowerCase();
 
-    // 1. Tool: navigateTo
+    // 1. Tool: launchGame
+    if (toolCallName === 'launchGame' || lower.includes('play game') || lower.includes('village run') || lower.includes('runner') || lower.includes('arcade')) {
+      if (onLaunchGame) {
+        onLaunchGame();
+        chips.push('Launched Village Run 3D 🎮');
+      }
+    }
+
+    // 2. Tool: openVideoStudio
+    if (toolCallName === 'openVideoStudio' || lower.includes('video') || lower.includes('reel') || lower.includes('omni flash')) {
+      if (onOpenVideoStudio) {
+        onOpenVideoStudio();
+        chips.push('Opened AI Video Studio 🎬');
+      }
+    }
+
+    // 3. Tool: openModelInspector
+    if (toolCallName === 'openModelInspector' || lower.includes('inspect 3d') || lower.includes('3d model') || lower.includes('3d scene')) {
+      if (onOpenModelInspector) {
+        onOpenModelInspector();
+        chips.push('Opened 3D Model Inspector 🛰️');
+      }
+    }
+
+    // 4. Tool: navigateTo
     if (
       toolCallName === 'navigateTo' ||
       lower.includes('take me to') ||
@@ -186,7 +217,7 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
       chips.push(`Scrolled to ${targetSection.toUpperCase()} ↓`);
     }
 
-    // 2. Tool: openProject
+    // 5. Tool: openProject
     if (toolCallName === 'openProject' || lower.includes('open') || lower.includes('deep dive')) {
       const match = portfolioData.projects.find(
         (p) =>
@@ -204,7 +235,7 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
       }
     }
 
-    // 3. Tool: downloadResume
+    // 6. Tool: downloadResume
     if (
       toolCallName === 'downloadResume' ||
       lower.includes('resume') ||
@@ -215,7 +246,7 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
       chips.push('Opened ATS Resume Modal 📄');
     }
 
-    // 4. Tool: showCards
+    // 7. Tool: showCards
     if (lower.includes('ai project') || lower.includes('projects') || lower.includes('what did he build')) {
       cards.push({
         type: 'project',
@@ -253,14 +284,19 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
     const sourceTags = retrieved.filter((r) => r.score > 0.15).map((r) => r.sourceTag);
 
     try {
-      // 2. Try Server-Side API Call with Gemini
+      // 2. Full Multi-Turn Server-Side API Call with Gemini 3.8 Flash
+      const conversationHistory = messages.slice(-6).map((m) => ({
+        role: m.sender === 'assistant' ? 'model' : 'user',
+        text: m.text,
+      }));
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: promptText,
           context: contextText,
-          history: messages.slice(-4).map((m) => ({ role: m.sender, content: m.text })),
+          history: conversationHistory,
         }),
       });
 
@@ -373,12 +409,12 @@ export const AskSharadAssistant: React.FC<AskSharadAssistantProps> = ({
               <div>
                 <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
                   <span>Ask Sharad</span>
-                  <span className="text-[10px] text-[#38BDF8] font-mono font-medium bg-[#38BDF8]/10 px-1.5 py-0.2 rounded">
-                    RAG Agent
+                  <span className="text-[10px] text-[#38BDF8] font-mono font-medium bg-[#38BDF8]/10 px-1.5 py-0.5 rounded border border-[#38BDF8]/30">
+                    Gemini 3.8 Flash
                   </span>
                 </h3>
                 <div className="text-[11px] text-slate-400">
-                  Site navigation · Technical Q&A
+                  Autonomous Multi-Turn Recruiter Avatar
                 </div>
               </div>
             </div>

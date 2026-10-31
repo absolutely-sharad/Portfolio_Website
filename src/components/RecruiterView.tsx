@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { portfolioData } from '../data/portfolio.ts';
-import { FileText, Copy, Check, ArrowLeft, ExternalLink, Github, Mail, Linkedin, Sparkles } from 'lucide-react';
+import { FileText, Copy, Check, ArrowLeft, ExternalLink, Github, Mail, Linkedin, Sparkles, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext.tsx';
 
 interface RecruiterViewProps {
   onToggleBack: () => void;
@@ -14,6 +15,7 @@ export const RecruiterView: React.FC<RecruiterViewProps> = ({
   onOpenAssistant,
 }) => {
   const [copied, setCopied] = useState(false);
+  const { toggleTheme, isLight } = useTheme();
   const { personal, education, experiences, projects, skills, achievements } = portfolioData;
 
   const handleCopySummary = () => {
@@ -54,7 +56,31 @@ KEY PROJECTS:
           <span>Return to 3D Space View</span>
         </button>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Theme Toggle in Recruiter View */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
+              isLight
+                ? 'bg-amber-100 text-amber-950 border-amber-300 hover:bg-amber-200'
+                : 'bg-white/[0.06] text-slate-300 hover:text-white border-white/10 hover:border-[#38BDF8]/40'
+            }`}
+            title={isLight ? 'Switch to Dark Galaxy Theme' : 'Switch to High-Contrast Light Theme'}
+          >
+            {isLight ? (
+              <>
+                <Moon className="w-3.5 h-3.5 text-amber-800" />
+                <span>Dark Mode</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-3.5 h-3.5 text-[#38BDF8]" />
+                <span>High-Contrast Light</span>
+              </>
+            )}
+          </button>
+
           <button
             type="button"
             onClick={onOpenAssistant}
@@ -106,8 +132,16 @@ KEY PROJECTS:
               <a href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-1">
                 <Github className="w-3 h-3" /> GitHub
               </a>
+              {personal.leetcode && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <a href={personal.leetcode} target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:underline flex items-center gap-1">
+                    LeetCode (500+)
+                  </a>
+                </>
+              )}
               <span aria-hidden="true">·</span>
-              <span>{personal.location}</span>
+              <span>{personal.location.split('(')[0].trim()}</span>
             </div>
           </div>
 

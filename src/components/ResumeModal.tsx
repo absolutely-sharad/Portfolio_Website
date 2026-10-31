@@ -23,7 +23,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
     const md = `
 # ${personal.name}
 **${personal.headline}**
-Email: ${personal.email} | LinkedIn: ${personal.linkedin} | GitHub: ${personal.github} | Location: ${personal.location}
+Email: ${personal.email} | LinkedIn: ${personal.linkedin} | GitHub: ${personal.github} | LeetCode: ${personal.leetcode || 'https://leetcode.com/sharadsingh0203/'} | Location: ${personal.location}
 
 ---
 
@@ -152,8 +152,16 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
               <a href={personal.github} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">
                 github.com/absolutely-sharad
               </a>
+              {personal.leetcode && (
+                <>
+                  <span>·</span>
+                  <a href={personal.leetcode} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">
+                    leetcode.com/sharadsingh0203
+                  </a>
+                </>
+              )}
               <span>·</span>
-              <span>{personal.location}</span>
+              <span>{personal.location.split('(')[0].trim()}</span>
             </div>
           </div>
 

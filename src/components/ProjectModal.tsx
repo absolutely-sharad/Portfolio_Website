@@ -1,6 +1,7 @@
 import React from 'react';
 import { Project } from '../data/portfolio.ts';
-import { X, ExternalLink, Github, CheckCircle, AlertCircle, Cpu, Zap } from 'lucide-react';
+import { X, ExternalLink, Github, CheckCircle, AlertCircle, Cpu, Zap, Box } from 'lucide-react';
+import { ProjectPlanet3D } from './models/ProjectPlanet3D.tsx';
 
 interface ProjectModalProps {
   project: Project | null;
@@ -44,8 +45,24 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           </button>
         </div>
 
+        {/* 3D Model Artifact Viewport */}
+        <div className="relative w-full h-56 rounded-2xl bg-gradient-to-b from-black/60 to-black/30 border border-white/10 overflow-hidden my-5 flex items-center justify-center">
+          <div className="absolute top-3 left-4 text-xs font-mono text-slate-400 z-10 flex items-center gap-1.5 bg-black/50 px-2.5 py-1 rounded-full border border-white/10">
+            <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
+            <span className="text-white font-semibold">3D Model Artifact</span>
+            <span className="text-slate-600">·</span>
+            <span className="text-[11px] text-slate-400">WebGL Interactive Inspection</span>
+          </div>
+          <ProjectPlanet3D
+            projectId={project.id}
+            category={project.category}
+            accent={project.accent}
+            className="w-full h-full"
+          />
+        </div>
+
         {/* Measurable Impact Highlight */}
-        <div className="my-6 p-4 rounded-xl bg-[#38BDF8]/10 border border-[#38BDF8]/30">
+        <div className="my-5 p-4 rounded-xl bg-[#38BDF8]/10 border border-[#38BDF8]/30">
           <div className="flex items-center gap-2 text-xs font-bold text-[#38BDF8] uppercase tracking-wider mb-1">
             <Zap className="w-4 h-4" />
             <span>Measurable Outcome</span>

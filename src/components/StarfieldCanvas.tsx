@@ -3,9 +3,10 @@ import * as THREE from 'three';
 
 interface StarfieldCanvasProps {
   interactive?: boolean;
+  isLight?: boolean;
 }
 
-export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = true }) => {
+export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = true, isLight = false }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
 
@@ -18,7 +19,7 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
 
     // 1. Scene setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x08090c, 0.0012);
+    scene.fog = new THREE.FogExp2(isLight ? 0xf8fafc : 0x08090c, isLight ? 0.0015 : 0.0012);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -39,15 +40,15 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     container.appendChild(renderer.domElement);
 
     // 3. Create particles
-    const particleCount = prefersReducedMotion ? 600 : 1800;
+    const particleCount = prefersReducedMotion ? 600 : (isLight ? 1200 : 1800);
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
 
-    const cyanColor = new THREE.Color(0x38bdf8);
-    const whiteColor = new THREE.Color(0xf1f5f9);
-    const faintBlueColor = new THREE.Color(0x94a3b8);
+    const cyanColor = new THREE.Color(isLight ? 0x0284c7 : 0x38bdf8);
+    const whiteColor = new THREE.Color(isLight ? 0x0f172a : 0xf1f5f9);
+    const faintBlueColor = new THREE.Color(isLight ? 0x64748b : 0x94a3b8);
 
     for (let i = 0; i < particleCount; i++) {
       // Distribute in a spherical cylinder cloud
@@ -60,12 +61,12 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
       positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       positions[i3 + 2] = (Math.random() - 0.5) * 800;
 
-      // Color distribution: 20% cyan, 60% faint blue/slate, 20% bright white
+      // Color distribution
       const colorRand = Math.random();
       let chosenColor = faintBlueColor;
-      if (colorRand < 0.22) {
+      if (colorRand < 0.25) {
         chosenColor = cyanColor;
-      } else if (colorRand > 0.8) {
+      } else if (colorRand > 0.75) {
         chosenColor = whiteColor;
       }
 
@@ -87,21 +88,27 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     const ctx = canvas.getContext('2d');
     if (ctx) {
       const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
-      grad.addColorStop(0, 'rgba(255,255,255,1)');
-      grad.addColorStop(0.3, 'rgba(56,189,248,0.8)');
-      grad.addColorStop(1, 'rgba(56,189,248,0)');
+      if (isLight) {
+        grad.addColorStop(0, 'rgba(15, 23, 42, 0.95)');
+        grad.addColorStop(0.35, 'rgba(2, 132, 199, 0.7)');
+        grad.addColorStop(1, 'rgba(2, 132, 199, 0)');
+      } else {
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.3, 'rgba(56, 189, 248, 0.8)');
+        grad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+      }
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 16, 16);
     }
     const texture = new THREE.CanvasTexture(canvas);
 
     const material = new THREE.PointsMaterial({
-      size: 2.5,
+      size: isLight ? 2.2 : 2.5,
       map: texture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.85,
-      blending: THREE.AdditiveBlending,
+      opacity: isLight ? 0.6 : 0.85,
+      blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
       depthWrite: false,
     });
 
@@ -109,7 +116,7 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     scene.add(particles);
 
     // 4. Subtle secondary orbital rings / distant galactic dust
-    const ringCount = 200;
+    const ringCount = isLight ? 120 : 200;
     const ringGeometry = new THREE.BufferGeometry();
     const ringPositions = new Float32Array(ringCount * 3);
     for (let i = 0; i < ringCount; i++) {
@@ -122,10 +129,10 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     ringGeometry.setAttribute('position', new THREE.BufferAttribute(ringPositions, 3));
     const ringMaterial = new THREE.PointsMaterial({
       size: 1.5,
-      color: 0x38bdf8,
+      color: isLight ? 0x0284c7 : 0x38bdf8,
       transparent: true,
-      opacity: 0.4,
-      blending: THREE.AdditiveBlending,
+      opacity: isLight ? 0.35 : 0.4,
+      blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
     });
     const ringPoints = new THREE.Points(ringGeometry, ringMaterial);
     ringPoints.rotation.x = Math.PI / 4;
@@ -198,7 +205,7 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
       ringMaterial.dispose();
       renderer.dispose();
     };
-  }, [interactive]);
+  }, [interactive, isLight]);
 
   return (
     <div

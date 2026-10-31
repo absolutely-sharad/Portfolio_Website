@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { portfolioData } from '../data/portfolio.ts';
 import { Trophy, Code2, Award, GitBranch, Github, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export const AchievementsSection: React.FC = () => {
   const { achievements, githubStats } = portfolioData;
@@ -53,7 +54,13 @@ export const AchievementsSection: React.FC = () => {
     <section id="achievements" className="py-20 border-t border-white/[0.06] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12"
+        >
           <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase mb-2">
             05 · Verified Accomplishments
           </div>
@@ -63,14 +70,18 @@ export const AchievementsSection: React.FC = () => {
           <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
             Objective metrics demonstrating algorithmic problem-solving capacity under competitive pressure.
           </p>
-        </div>
+        </motion.div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {achievements.map((item) => (
-            <div
+          {achievements.map((item, idx) => (
+            <motion.div
               key={item.id}
-              className="p-6 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/30 transition-all flex flex-col justify-between"
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: idx * 0.1 }}
+              className="p-6 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/30 transition-all flex flex-col justify-between shadow-lg shadow-black/20"
             >
               <div>
                 <div className="text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mb-3 flex items-center justify-between">
@@ -87,12 +98,18 @@ export const AchievementsSection: React.FC = () => {
                   {item.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Live GitHub Contribution Heatmap Card */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1217] border border-white/[0.08]">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          className="p-6 sm:p-8 rounded-2xl bg-[#0E1217] border border-white/[0.08] shadow-xl shadow-black/30"
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
               <Github className="w-5 h-5 text-white" />
@@ -159,7 +176,7 @@ export const AchievementsSection: React.FC = () => {
               <span className="text-[11px]">More</span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

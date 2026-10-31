@@ -1,6 +1,7 @@
 import React from 'react';
 import { portfolioData } from '../data/portfolio.ts';
 import { Cpu, Server, Layout, Database, Wrench } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const categoryIcons: Record<string, React.ReactNode> = {
   'AI & LLM Engineering': <Cpu className="w-4 h-4 text-[#38BDF8]" />,
@@ -17,7 +18,13 @@ export const SkillsSection: React.FC = () => {
     <section id="skills" className="py-20 border-t border-white/[0.06] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12"
+        >
           <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase mb-2">
             04 · Technical Stack
           </div>
@@ -27,14 +34,18 @@ export const SkillsSection: React.FC = () => {
           <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
             Grouped by architectural discipline with zero vanity percentage bars.
           </p>
-        </div>
+        </motion.div>
 
         {/* 5-Column Grid or 2/3 Bento Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skills.map((group) => (
-            <div
+          {skills.map((group, idx) => (
+            <motion.div
               key={group.category}
-              className="p-6 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: idx * 0.08 }}
+              className="p-6 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/30 transition-all flex flex-col justify-between shadow-lg shadow-black/20"
             >
               <div>
                 {/* Category Header */}
@@ -64,7 +75,7 @@ export const SkillsSection: React.FC = () => {
               <div className="mt-6 pt-3 border-t border-white/[0.04] text-[11px] text-slate-400 font-mono">
                 {group.items.length} Production Modules
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

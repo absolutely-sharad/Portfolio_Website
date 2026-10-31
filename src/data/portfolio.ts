@@ -31,6 +31,12 @@ export interface Education {
   period: string;
   grade: string;
   highlights: string[];
+  secondary?: {
+    institution: string;
+    location: string;
+    qualification: string;
+    highlights: string;
+  };
 }
 
 export interface Achievement {
@@ -61,6 +67,7 @@ export interface PortfolioData {
     location: string;
     linkedin: string;
     github: string;
+    leetcode?: string;
     openToWork: boolean;
     targetRoles: string[];
   };
@@ -92,11 +99,12 @@ export const portfolioData: PortfolioData = {
     name: "Sharad Singh Kushwaha",
     headline: "AI & Backend Engineer",
     valueStatement: "Architecting autonomous multi-agent pipelines, high-throughput backend services, and production AI systems that scale.",
-    bio: "AI & Backend Engineer and Co-founder of Infonix Cloud. Currently completing B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University) with a 9.17/10 CGPA. Passionate about LLM agent workflows, vector search systems, resilient distributed backends, and full-stack software development.",
+    bio: "AI & Backend Engineer and Co-founder of Infonix Cloud. Pursuing B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University) with a 9.17/10 CGPA. Solved 500+ LeetCode problems with deep mastery in agentic systems, vector retrieval, and production backend architecture.",
     email: "sharadsingh0203@gmail.com",
-    location: "India (Open to Global Remote & Relocation)",
-    linkedin: "https://linkedin.com/in/sharad0203",
+    location: "Gurugram, Haryana, India (Open to Global Remote & Relocation)",
+    linkedin: "https://www.linkedin.com/in/sharad0203/",
     github: "https://github.com/absolutely-sharad",
+    leetcode: "https://leetcode.com/sharadsingh0203/",
     openToWork: true,
     targetRoles: ["AI Engineer", "Backend Engineer", "Full-Stack AI Engineer", "LLM Systems Engineer"],
   },
@@ -108,8 +116,14 @@ export const portfolioData: PortfolioData = {
     highlights: [
       "Top 1% cohort academic standing with consistent 9.0+ semester CGPA",
       "Specialized coursework in Distributed Systems, Artificial Intelligence, Database Internals, and Computer Networks",
-      "Executive organizer for University technical symposiums and coding hackathons",
+      "Executive organizer for University technical symposiums and collegiate coding hackathons",
     ],
+    secondary: {
+      institution: "St. John's School",
+      location: "Tulsipur, Ghazipur, UP",
+      qualification: "Senior Secondary / High School",
+      highlights: "Graduated with distinction in Science and Mathematics, foundational training in algorithmic problem-solving and computer science.",
+    },
   },
   experiences: [
     {
@@ -255,6 +269,20 @@ export const portfolioData: PortfolioData = {
   ],
   skills: [
     {
+      category: "Languages & CS Foundations",
+      items: [
+        "Java",
+        "C++",
+        "Python",
+        "TypeScript",
+        "JavaScript",
+        "Kotlin",
+        "Data Structures & Algorithms (500+ LeetCode)",
+        "System Design & Microservices",
+        "Object-Oriented Programming (OOP)",
+      ],
+    },
+    {
       category: "AI & LLM Engineering",
       items: [
         "Gemini API / SDK",
@@ -269,7 +297,7 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      category: "Backend & Systems",
+      category: "Backend & Distributed Systems",
       items: [
         "Node.js & Express",
         "Python & FastAPI",
@@ -283,16 +311,16 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      category: "Frontend & 3D Web",
+      category: "Frontend, Mobile & 3D Web",
       items: [
         "React 19 & Next.js",
         "TypeScript (Strict Type-Safety)",
         "Tailwind CSS v4",
+        "Android Development (Kotlin)",
+        "Flutter Cross-Platform",
         "Three.js & WebGL",
         "Framer Motion / Motion",
         "Responsive Mobile-First Architecture",
-        "Accessibility (WCAG AA Compliance)",
-        "State Management",
       ],
     },
     {
@@ -309,7 +337,7 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      category: "DevOps & Tooling",
+      category: "DevOps & Cloud Infrastructure",
       items: [
         "Docker & Containerization",
         "Git & GitHub Actions CI/CD",
@@ -327,7 +355,7 @@ export const portfolioData: PortfolioData = {
       id: "leetcode",
       title: "500+ LeetCode Problems Solved",
       metric: "500+ Solved",
-      description: "Demonstrated mastery in Data Structures, Dynamic Programming, Graph Algorithms, and System Design.",
+      description: "Demonstrated mastery in Data Structures, Dynamic Programming, Graph Algorithms, and System Design (@sharadsingh0203).",
       category: "Competitive Programming",
     },
     {
@@ -482,6 +510,30 @@ export const portfolioData: PortfolioData = {
       category: "Contact",
       content: "Sharad is actively open to interview opportunities for AI Engineer, Backend Engineer, and Full-Stack AI Engineer roles. He can be contacted at sharadsingh0203@gmail.com, via LinkedIn at linkedin.com/in/sharad0203, and his code can be explored at github.com/absolutely-sharad.",
       keywords: ["hire", "availability", "contact", "email", "linkedin", "github", "roles", "interview"],
+    },
+    {
+      id: "chunk-linkedin",
+      title: "Sharad's LinkedIn Profile & Professional Network",
+      sectionId: "contact",
+      category: "Profile",
+      content: "Sharad's official LinkedIn profile is https://www.linkedin.com/in/sharad0203/. His profile details his journey as an AI & Backend Engineer, Co-founder of Infonix Cloud, academic excellence at Polaris School of Technology (9.17 CGPA), and event leadership for the Polaris Innov-a-thon across 150+ schools with Classplus.",
+      keywords: ["linkedin", "profile", "sharad0203", "social", "network", "connect", "experience", "url"],
+    },
+    {
+      id: "chunk-education-history",
+      title: "Academic Background & Schooling",
+      sectionId: "about",
+      category: "Education",
+      content: "Sharad is pursuing B.Tech CSE at Polaris School of Technology (Starex University) with a 9.17/10 CGPA (2023–2027). Before college, he studied at St. John's School in Tulsipur, Ghazipur, graduating with distinction in Science & Mathematics, where he first developed his passion for algorithmic problem solving and software development.",
+      keywords: ["education", "school", "st johns", "ghazipur", "tulsipur", "polaris", "pst", "btech", "degree", "academic"],
+    },
+    {
+      id: "chunk-leetcode-profile",
+      title: "LeetCode & Competitive Coding Track Record",
+      sectionId: "achievements",
+      category: "Competitive Programming",
+      content: "Sharad's LeetCode profile is @sharadsingh0203 (https://leetcode.com/sharadsingh0203/). He has solved 500+ algorithmic challenges spanning Data Structures, Dynamic Programming, Graphs, and Greedy Algorithms. He also placed in the top tier globally in CodeChef Starters 123 (Rank 1467) and was runner-up in FCPL.",
+      keywords: ["leetcode", "sharadsingh0203", "codechef", "dsa", "algorithms", "problem solving", "rating", "rank"],
     },
   ],
 };

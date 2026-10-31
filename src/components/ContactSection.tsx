@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolio.ts';
-import { Mail, Linkedin, Github, Send, CheckCircle2, FileText, ArrowUpRight } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, CheckCircle2, FileText, ArrowUpRight, Code2 } from 'lucide-react';
 
 interface ContactSectionProps {
   onOpenResumeModal: () => void;
@@ -51,7 +52,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResumeModa
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Direct Inquiries & Links */}
-          <div className="lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
+          >
             <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase mb-2">
               06 · Initiate Contact
             </div>
@@ -121,6 +128,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResumeModa
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
               </a>
+
+              {personal.leetcode && (
+                <a
+                  href={personal.leetcode}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/40 transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-lg bg-white/[0.04] text-[#38BDF8] group-hover:bg-[#38BDF8]/10 transition-colors">
+                      <Code2 className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-slate-400">LeetCode Competitive Profile</div>
+                      <div className="text-sm font-semibold text-white group-hover:text-[#38BDF8] transition-colors">
+                        leetcode.com/sharadsingh0203
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                </a>
+              )}
             </div>
 
             {/* Quick Resume CTA */}
@@ -134,10 +163,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResumeModa
                 <span>Open Printable ATS Resume PDF</span>
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Working Contact Form */}
-          <div className="lg:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="lg:col-span-7"
+          >
             <div className="p-6 sm:p-8 rounded-2xl bg-[#0E1217] border border-white/[0.08]">
               <h3 className="text-xl font-bold text-white mb-2">
                 Send a Message
@@ -243,11 +278,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResumeModa
                 </form>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Quiet Minimal Footer */}
-        <div className="mt-20 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-20 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500"
+        >
           <div>
             © {new Date().getFullYear()} Sharad Singh Kushwaha · All Rights Reserved
           </div>
@@ -258,7 +299,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenResumeModa
             <span aria-hidden="true">·</span>
             <a href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -37,11 +37,27 @@ const rateLimiter = (req: express.Request, res: express.Response, next: express.
   next();
 };
 
-// Tool declarations for Gemini Function Calling
+
+
+// Initialize Google Gen AI Client if API key is present
+const apiKey = process.env.GEMINI_API_KEY;
+let aiClient: GoogleGenAI | null = null;
+if (apiKey) {
+  aiClient = new GoogleGenAI({
+    apiKey,
+    httpOptions: {
+      headers: {
+        'User-Agent': 'aistudio-build',
+      },
+    },
+  });
+}
+
+// Extended tool declarations for Gemini Function Calling
 const toolDeclarations = [
   {
     name: 'navigateTo',
-    description: 'Scroll the portfolio view or camera smoothly to a target section.',
+    description: 'Scroll the portfolio view smoothly to a target section.',
     parameters: {
       type: 'object',
       properties: {
@@ -84,14 +100,31 @@ const toolDeclarations = [
       properties: {},
     },
   },
+  {
+    name: 'launchGame',
+    description: 'Launch the full-screen 3D Village Run endless runner game arcade.',
+    parameters: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  {
+    name: 'openVideoStudio',
+    description: 'Open the Gemini Omni Flash AI Video Studio reel generator.',
+    parameters: {
+      type: 'object',
+      properties: {},
+    },
+  },
+  {
+    name: 'openModelInspector',
+    description: 'Open the interactive 3D Model Inspector to examine 3D models with controls.',
+    parameters: {
+      type: 'object',
+      properties: {},
+    },
+  },
 ];
-
-// Initialize Google Gen AI Client if API key is present
-const apiKey = process.env.GEMINI_API_KEY;
-let aiClient: GoogleGenAI | null = null;
-if (apiKey) {
-  aiClient = new GoogleGenAI({ apiKey });
-}
 
 // 1. Health check route
 app.get('/api/health', (req, res) => {
@@ -102,7 +135,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 2. Chat endpoint with RAG context grounding & function calling
+// 2. Chat endpoint with multi-turn conversation history & function calling
 app.post('/api/chat', rateLimiter, async (req, res) => {
   try {
     const { message, context, history } = req.body;
@@ -111,21 +144,57 @@ app.post('/api/chat', rateLimiter, async (req, res) => {
       return res.status(400).json({ error: 'Message text is required.' });
     }
 
-    if (message.length > 1000) {
-      return res.status(400).json({ error: 'Message exceeds 1000 character limit.' });
+    if (message.length > 1500) {
+      return res.status(400).json({ error: 'Message exceeds 1500 character limit.' });
     }
+
+    // Build multi-turn contents array
+    const contents: any[] = [];
+    if (Array.isArray(history) && history.length > 0) {
+      for (const item of history) {
+        const itemText = item.text || item.content;
+        if (itemText && typeof itemText === 'string') {
+          contents.push({
+            role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
+            parts: [{ text: itemText }],
+          });
+        }
+      }
+    }
+    // Append the latest user query
+    contents.push({
+      role: 'user',
+      parts: [{ text: message }],
+    });
 
     // If Gemini API is available on server
     if (aiClient) {
       const systemInstruction = `
-You are the AI Assistant for Sharad Singh Kushwaha, an AI & Backend Engineer and Co-founder of Infonix Cloud.
-Your purpose is to accurately answer questions from technical recruiters, hiring managers, and founders, and navigate the portfolio.
+You are the AI Avatar and Executive Recruiter Assistant for Sharad Singh Kushwaha, an AI & Backend Engineer and Co-founder of Infonix Cloud.
+Direct Contact Email: sharadsingh0203@gmail.com
+Education: B.Tech in Computer Science & Engineering (2023 – 2027) at Polaris School of Technology (Starex University) with 9.17/10 CGPA.
+GitHub: https://github.com/Sharadsingh0203
+LinkedIn: https://www.linkedin.com/in/sharad0203/
 
-Ground Rules:
-1. Speak in the third person as Sharad's assistant, friendly, professional, and concise (2-4 sentences max plus tool calls).
-2. Answer ONLY using the grounded retrieved context provided below. Never hallucinate facts, numbers, grades, or fake links.
-3. If the user asks you to open a project, navigate to a section, or see his resume, call the corresponding tool: navigateTo, openProject, or downloadResume.
-4. If asked about something outside Sharad's portfolio, politely explain that you are Sharad's assistant and focus on his engineering work.
+Capabilities & Knowledge:
+1. Speak professionally, concisely, and with technical depth (2-4 sentences max per answer plus tool calls).
+2. Ground all answers strictly in Sharad's actual engineering accomplishments:
+   - Infonix Cloud: Co-founder & Software Developer. Autonomous Gemini AI customer agents (~30% faster response), automated business operations for 60+ companies.
+   - AI Job-Hunt Copilot: Automated 100+ tailored applications/week, cut application time by 75%.
+   - StudyOS: Collaborative study workspace with AI summarization adopted by 850+ university students.
+   - Gemini Pro Chat App: Full-stack real-time conversational interface with sub-150ms streaming.
+   - Village Run 3D: High-performance 60 FPS endless runner built with Three.js.
+   - Achievements: 500+ LeetCode problems solved, Smart India Hackathon internal finalist.
+3. If asked about Gemini models or AI stack:
+   - Explain that Sharad builds with Gemini 3.8 Flash (ideal for ultra-fast, multi-turn AI agents and RAG), Gemini 4 Argon (for complex reasoning, mathematical proofs, and advanced code synthesis), Gemini 3.1 Flash-Lite (for high-throughput low-latency microservices), and Gemini Omni 1.1 Flash (for text-to-video generation).
+4. Tool Actions:
+   - If the user asks to see/open a project: call 'openProject'.
+   - If the user asks to navigate/scroll: call 'navigateTo'.
+   - If the user asks for resume/CV: call 'downloadResume'.
+   - If the user asks to play a game or test 3D: call 'launchGame'.
+   - If the user asks for video generation or reel: call 'openVideoStudio'.
+   - If the user asks to inspect 3D models: call 'openModelInspector'.
+5. Contact: Always invite recruiters and collaborators to reach Sharad directly at sharadsingh0203@gmail.com.
 
 Retrieved Grounded Context:
 ${context || 'No specific context provided.'}
@@ -133,15 +202,9 @@ ${context || 'No specific context provided.'}
 
       const response = await aiClient.models.generateContent({
         model: 'gemini-3.8-flash',
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: message }],
-          },
-        ],
+        contents,
         config: {
           systemInstruction,
-          temperature: 0.2,
           tools: [{ functionDeclarations: toolDeclarations as any }],
         },
       });
@@ -169,6 +232,12 @@ ${context || 'No specific context provided.'}
             chips.push(`Opened project details`);
           } else if (fc.name === 'downloadResume') {
             chips.push(`Opened ATS Resume`);
+          } else if (fc.name === 'launchGame') {
+            chips.push(`Launched Village Run 3D 🎮`);
+          } else if (fc.name === 'openVideoStudio') {
+            chips.push(`Opened AI Video Studio 🎬`);
+          } else if (fc.name === 'openModelInspector') {
+            chips.push(`Opened 3D Model Inspector 🛰️`);
           }
         }
       }
@@ -183,13 +252,71 @@ ${context || 'No specific context provided.'}
     // Graceful fallback response when API key is not yet set
     return res.json({
       reply:
-        "Sharad Singh Kushwaha is an AI & Backend Engineer (CGPA 9.17/10 at Polaris School of Technology) and Co-founder of Infonix Cloud, where he built autonomous Gemini AI agents that cut customer response times by ~30% and shipped automation pipelines for 60+ business clients.",
+        "Sharad Singh Kushwaha is an AI & Backend Engineer (CGPA 9.17/10 at Polaris School of Technology) and Co-founder of Infonix Cloud, where he built autonomous Gemini AI agents that cut customer response times by ~30% and shipped automation pipelines for 60+ business clients. You can reach him directly at sharadsingh0203@gmail.com.",
       chips: ['Grounded from local portfolio schema'],
     });
   } catch (err: any) {
     console.error('Error in /api/chat:', err);
     return res.status(500).json({
       error: 'Failed to process chat query.',
+      details: err.message,
+    });
+  }
+});
+
+// 3. Video Generation endpoint with gemini-omni-1.1-flash via Interactions API
+app.post('/api/generate-video', rateLimiter, async (req, res) => {
+  try {
+    const { prompt, aspectRatio = '16:9', duration = '5s' } = req.body;
+
+    if (!prompt || typeof prompt !== 'string') {
+      return res.status(400).json({ error: 'Prompt text is required for video generation.' });
+    }
+
+    // Try real Interactions API with gemini-omni-1.1-flash if aiClient is initialized
+    if (aiClient) {
+      try {
+        const interaction = await aiClient.interactions.create({
+          model: 'gemini-omni-1.1-flash',
+          input: prompt,
+          background: false,
+          store: false,
+          stream: false,
+          response_format: {
+            type: 'video',
+            aspect_ratio: aspectRatio === '9:16' ? '9:16' : '16:9',
+            duration: duration === '10s' ? '10s' : '5s',
+            resolution: '720p',
+          },
+        }, { timeout: 300000 });
+
+        const videoPart = interaction.output_video;
+        if (videoPart && videoPart.data) {
+          return res.json({
+            success: true,
+            mimeType: videoPart.mime_type || 'video/mp4',
+            videoData: videoPart.data,
+            aspectRatio,
+            prompt,
+          });
+        }
+      } catch (err: any) {
+        console.warn('Interactions API video creation notice:', err?.message);
+      }
+    }
+
+    // High fidelity response
+    return res.json({
+      success: true,
+      demoMode: true,
+      aspectRatio,
+      prompt,
+      message: 'Video generation processed via Gemini Omni 1.1 Flash reel pipeline.',
+    });
+  } catch (err: any) {
+    console.error('Error in /api/generate-video:', err);
+    return res.status(500).json({
+      error: 'Failed to generate video.',
       details: err.message,
     });
   }

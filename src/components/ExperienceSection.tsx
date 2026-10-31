@@ -1,17 +1,48 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { portfolioData } from '../data/portfolio.ts';
-import { Briefcase, TrendingUp, CheckCircle, Calendar, MapPin } from 'lucide-react';
+import { Briefcase, TrendingUp, CheckCircle, Calendar, MapPin, Clock } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { calculateReadingTime } from '../utils/readingTime.ts';
 
 export const ExperienceSection: React.FC = () => {
   const { experiences } = portfolioData;
+
+  const readingTime = useMemo(() => {
+    const textPieces: string[] = [];
+    experiences.forEach((exp) => {
+      textPieces.push(
+        exp.role,
+        exp.company,
+        exp.location,
+        ...exp.impactMetrics,
+        ...exp.highlights,
+        ...exp.technologies
+      );
+    });
+    return calculateReadingTime(textPieces);
+  }, [experiences]);
 
   return (
     <section id="experience" className="py-20 border-t border-white/[0.06] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="mb-14">
-          <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase mb-2">
-            02 · Career & Industry Impact
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-14"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+            <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase">
+              02 · Career & Industry Impact
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-slate-400">
+              <Clock className="w-3.5 h-3.5 text-[#38BDF8]" />
+              <span className="text-slate-300 font-medium">{readingTime.text}</span>
+              <span className="text-slate-600">·</span>
+              <span className="text-slate-500">{readingTime.words} words</span>
+            </div>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
             Impact-Driven Engineering Experience
@@ -19,12 +50,19 @@ export const ExperienceSection: React.FC = () => {
           <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
             Track record of shipping production AI workflows, high-reliability backends, and full-stack solutions.
           </p>
-        </div>
+        </motion.div>
 
         {/* Timeline list */}
         <div className="space-y-8 relative before:absolute before:inset-0 before:left-3.5 sm:before:left-4 before:w-[2px] before:bg-white/[0.08]">
-          {experiences.map((exp) => (
-            <div key={exp.id} className="relative pl-10 sm:pl-12 group">
+          {experiences.map((exp, idx) => (
+            <motion.div
+              key={exp.id}
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: idx * 0.12 }}
+              className="relative pl-10 sm:pl-12 group"
+            >
               {/* Timeline marker */}
               <div
                 className={`absolute left-1.5 sm:left-2 top-1.5 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
@@ -41,7 +79,7 @@ export const ExperienceSection: React.FC = () => {
               </div>
 
               {/* Experience Card */}
-              <div className="p-6 sm:p-7 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/30 transition-all">
+              <div className="p-6 sm:p-7 rounded-2xl bg-[#0E1217] border border-white/[0.08] hover:border-[#38BDF8]/30 transition-all shadow-lg shadow-black/20">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
                   <div>
                     <div className="flex items-center gap-2">
@@ -113,7 +151,7 @@ export const ExperienceSection: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
