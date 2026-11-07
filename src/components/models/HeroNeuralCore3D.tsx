@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Eye, RotateCw, Sparkles, Layers } from 'lucide-react';
+import { RotateCw, Layers } from 'lucide-react';
 
 interface HeroNeuralCore3DProps {
   className?: string;
@@ -10,7 +10,6 @@ export const HeroNeuralCore3D: React.FC<HeroNeuralCore3DProps> = ({ className = 
   const mountRef = useRef<HTMLDivElement>(null);
   const [wireframe, setWireframe] = useState<boolean>(false);
   const [isRotating, setIsRotating] = useState<boolean>(true);
-  const [activeNode, setActiveNode] = useState<string>('Neural Core Active');
 
   // Keep ref for dynamic wireframe toggles without rebuilding scene
   const wireframeRef = useRef<boolean>(wireframe);
@@ -327,18 +326,18 @@ export const HeroNeuralCore3D: React.FC<HeroNeuralCore3DProps> = ({ className = 
       />
 
       {/* Floating 3D HUD / Controls Strip */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 rounded-xl bg-[#0E1217]/85 backdrop-blur-md border border-white/10 shadow-lg text-xs z-20">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 text-slate-300 font-mono text-[11px]">
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 p-1.5 rounded-xl bg-[#0E1217]/85 backdrop-blur-md border border-white/10 shadow-lg text-xs z-20 max-w-[calc(100%-1.5rem)]">
+        <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 text-slate-300 font-mono text-[11px] shrink-0">
           <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse" />
-          <span className="text-white font-semibold">AI Neural Core 3D</span>
+          <span className="text-white font-semibold">AI Neural Core</span>
         </div>
 
-        <span aria-hidden="true" className="text-slate-600">·</span>
+        <span aria-hidden="true" className="hidden sm:inline text-slate-600">·</span>
 
         <button
           type="button"
           onClick={() => setWireframe(!wireframe)}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all shrink-0 ${
             wireframe
               ? 'bg-[#38BDF8] text-[#08090C] font-semibold'
               : 'text-slate-400 hover:text-white bg-white/[0.04]'
@@ -352,7 +351,7 @@ export const HeroNeuralCore3D: React.FC<HeroNeuralCore3DProps> = ({ className = 
         <button
           type="button"
           onClick={() => setIsRotating(!isRotating)}
-          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all ${
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all shrink-0 ${
             isRotating
               ? 'bg-white/[0.08] text-slate-200'
               : 'bg-[#38BDF8]/20 text-[#38BDF8]'
@@ -362,12 +361,6 @@ export const HeroNeuralCore3D: React.FC<HeroNeuralCore3DProps> = ({ className = 
           <RotateCw className={`w-3 h-3 ${isRotating ? 'animate-spin' : ''}`} style={{ animationDuration: '4s' }} />
           <span>{isRotating ? 'Auto' : 'Paused'}</span>
         </button>
-      </div>
-
-      {/* Drag Hint */}
-      <div className="absolute top-2 right-3 text-[10px] text-slate-400 font-mono flex items-center gap-1 pointer-events-none bg-black/40 px-2 py-0.5 rounded-full border border-white/5">
-        <Sparkles className="w-3 h-3 text-[#38BDF8]" />
-        <span>Drag to Orbit 3D</span>
       </div>
     </div>
   );

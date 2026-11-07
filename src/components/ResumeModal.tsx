@@ -81,7 +81,7 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-[#0E1217] border border-white/20 rounded-2xl shadow-2xl p-6 sm:p-8 text-slate-100"
+        className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto bg-[#131519] border border-white/10 rounded-2xl shadow-2xl p-6 sm:p-8 text-zinc-100"
         role="dialog"
         aria-modal="true"
         aria-labelledby="resume-title"
@@ -92,7 +92,7 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
             <h2 id="resume-title" className="text-xl sm:text-2xl font-bold text-white">
               Official ATS Resume
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-zinc-400 mt-0.5">
               Verified 1-page ATS layout ready for export or immediate PDF printing
             </p>
           </div>
@@ -101,7 +101,7 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
             <button
               type="button"
               onClick={handleCopyMarkdown}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white bg-white/[0.06] hover:bg-white/[0.1] border border-white/10 rounded-lg transition-colors"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied MD' : 'Copy Markdown'}</span>
@@ -110,7 +110,7 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
             <button
               type="button"
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#08090C] bg-[#38BDF8] hover:bg-[#7dd3fc] rounded-lg transition-colors shadow-sm"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors shadow-sm"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print / Save PDF</span>
@@ -119,7 +119,7 @@ ${achievements.map((a) => `- **${a.title}**: ${a.description} (${a.metric})`).jo
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] rounded-lg transition-colors"
+              className="p-1.5 text-zinc-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] rounded-lg transition-colors"
               aria-label="Close resume dialog"
             >
               <X className="w-5 h-5" />

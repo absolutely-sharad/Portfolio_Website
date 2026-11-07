@@ -99,7 +99,7 @@ export const portfolioData: PortfolioData = {
     name: "Sharad Singh Kushwaha",
     headline: "AI & Backend Engineer",
     valueStatement: "Architecting autonomous multi-agent pipelines, high-throughput backend services, and production AI systems that scale.",
-    bio: "AI & Backend Engineer and Co-founder of Infonix Cloud. Pursuing B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University) with a 9.17/10 CGPA. Solved 500+ LeetCode problems with deep mastery in agentic systems, vector retrieval, and production backend architecture.",
+    bio: "AI & Backend Engineer, Founder of MacroPing, and Co-founder of Infonix Cloud. Pursuing B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University) with a stellar 9.50 CGPA in 6th semester and 9.17 cumulative CGPA. Solved 500+ LeetCode problems with deep mastery in agentic systems, vector retrieval, and production backend architecture.",
     email: "sharadsingh0203@gmail.com",
     location: "Gurugram, Haryana, India (Open to Global Remote & Relocation)",
     linkedin: "https://www.linkedin.com/in/sharad0203/",
@@ -112,9 +112,10 @@ export const portfolioData: PortfolioData = {
     degree: "B.Tech in Computer Science & Engineering",
     institution: "Polaris School of Technology (Starex University)",
     period: "2023 – 2027",
-    grade: "9.17 / 10 CGPA",
+    grade: "9.50 (6th Sem) · 9.17 Cumulative",
     highlights: [
-      "Top 1% cohort academic standing with consistent 9.0+ semester CGPA",
+      "Scored a stellar 9.50 CGPA in 6th Semester (Departmental Top Rank in CSE)",
+      "Top 1% cohort academic standing with consistent 9.0+ semester CGPA and 9.17 cumulative",
       "Specialized coursework in Distributed Systems, Artificial Intelligence, Database Internals, and Computer Networks",
       "Executive organizer for University technical symposiums and collegiate coding hackathons",
     ],
@@ -126,6 +127,25 @@ export const portfolioData: PortfolioData = {
     },
   },
   experiences: [
+    {
+      id: "macroping",
+      role: "Founder & Lead Architect",
+      company: "MacroPing",
+      location: "Remote / India",
+      period: "2026 – Present",
+      current: true,
+      impactMetrics: [
+        "AI food tracking & coaching platform for gym-goers and trainers",
+        "Multimodal nutrition logging via text or photo with instant macro breakdown",
+        "Unified coach dashboard for workout splits and client compliance",
+      ],
+      technologies: ["Next.js", "TypeScript", "Multimodal AI Vision", "Tailwind CSS", "PostgreSQL", "Vercel"],
+      highlights: [
+        "Founded and engineered MacroPing (https://macroping.vercel.app/), an AI food tracking and coaching platform for gym-goers and fitness coaches.",
+        "Architected multimodal text & photo meal recognition pipelines that instantly estimate calories and macronutrient ratios with sub-second feedback.",
+        "Built a centralized coaching portal enabling fitness trainers to program workout splits, review weekly macro compliance, and streamline client check-ins.",
+      ],
+    },
     {
       id: "infonix-cloud",
       role: "Co-founder & Software Developer",
@@ -183,6 +203,20 @@ export const portfolioData: PortfolioData = {
   ],
   projects: [
     {
+      id: "macroping",
+      title: "MacroPing",
+      tagline: "AI food tracking & coaching platform for gym-goers and fitness coaches",
+      category: "AI / LLM",
+      problem: "Gym-goers struggle with tedious manual calorie entry, while fitness coaches lack a centralized dashboard to track client workout splits and weekly nutrition compliance.",
+      solution: "Built an intelligent multimodal nutrition platform where users track meals by text or photo for instant calories, macros, and workout splits, while coaches manage all client rosters from a unified portal.",
+      stack: ["Next.js", "TypeScript", "Multimodal AI Vision", "Tailwind CSS", "PostgreSQL", "Vercel"],
+      measurableResult: "Live in production with instant multimodal meal logging and unified coach dashboard workflows.",
+      liveDemo: "https://macroping.vercel.app/",
+      github: "https://www.linkedin.com/company/144060088/",
+      featured: true,
+      accent: "#10B981",
+    },
+    {
       id: "ai-job-hunt-copilot",
       title: "AI Job-Hunt Copilot",
       tagline: "Autonomous multi-agent system for personalized job matching and resume tailoring",
@@ -194,7 +228,7 @@ export const portfolioData: PortfolioData = {
       liveDemo: "https://github.com/absolutely-sharad/Ai_Job-Hunt_Copilot#deploy-to-vercel",
       github: "https://github.com/absolutely-sharad/Ai_Job-Hunt_Copilot",
       featured: true,
-      accent: "#38BDF8",
+      accent: "#2563EB",
     },
     {
       id: "studyos",
@@ -208,7 +242,7 @@ export const portfolioData: PortfolioData = {
       liveDemo: "https://github.com/absolutely-sharad/studyos",
       github: "https://github.com/absolutely-sharad/studyos",
       featured: true,
-      accent: "#818CF8",
+      accent: "#4F46E5",
     },
     {
       id: "gemini-pro-chat",
@@ -222,7 +256,7 @@ export const portfolioData: PortfolioData = {
       liveDemo: "https://nextjs-ai-chatbot-pied-three-81.vercel.app",
       github: "https://github.com/absolutely-sharad/Google_Gemini-Pro_Chat_Application",
       featured: true,
-      accent: "#38BDF8",
+      accent: "#2563EB",
     },
     {
       id: "finance-tracker",
@@ -236,7 +270,7 @@ export const portfolioData: PortfolioData = {
       liveDemo: "https://financetracker-absolutely-sharad.netlify.app",
       github: "https://github.com/absolutely-sharad/Finance-Tracker-Application",
       featured: false,
-      accent: "#34D399",
+      accent: "#0D9488",
     },
     {
       id: "doctor-appointment-app",
@@ -250,21 +284,21 @@ export const portfolioData: PortfolioData = {
       liveDemo: "https://rakshaya-doctor-appointment.netlify.app",
       github: "https://github.com/absolutely-sharad/Doctor_Appointment_App",
       featured: false,
-      accent: "#F472B6",
+      accent: "#475569",
     },
     {
       id: "village-run",
-      title: "Village Run 3D (The Indian Runner)",
-      tagline: "High-octane endless procedural 3D runner built directly in WebGL and Three.js",
+      title: "Neural Path Runner (Procedural 3D WebGL Engine)",
+      tagline: "High-octane endless procedural 3D cybernetic highway runner built directly in WebGL and Three.js",
       category: "3D / Game",
       problem: "Web-based 3D games are commonly bloated with multi-megabyte engine downloads and frame drops on budget mobile devices.",
-      solution: "Engineered a pure Three.js procedural runner with custom collision math, dynamic obstacle generation, optimized shader materials, and zero external game engine bloat.",
+      solution: "Engineered a pure Three.js procedural runner with custom collision math, dynamic obstacle generation, optimized shader materials, and zero external game engine bloat (originally inspired by Village Run 3D / The Indian Runner).",
       stack: ["Three.js", "WebGL", "TypeScript", "Vite", "Web Audio API"],
       measurableResult: "Delivers smooth 60 FPS performance on mid-tier mobile hardware with a sub-2.5MB initial bundle size.",
       liveDemo: "https://absolutely-sharad.github.io/The_Indian_Runner/",
       github: "https://github.com/absolutely-sharad/The_Indian_Runner",
       featured: false,
-      accent: "#FBBF24",
+      accent: "#2563EB",
     },
   ],
   skills: [
@@ -375,8 +409,8 @@ export const portfolioData: PortfolioData = {
     {
       id: "academics",
       title: "B.Tech CSE Academic Distinction",
-      metric: "9.17 / 10 CGPA",
-      description: "Top 1% rank at Polaris School of Technology (Starex University) across all engineering semesters.",
+      metric: "9.50 (6th Sem) · 9.17 CGPA",
+      description: "Scored 9.50 CGPA in 6th semester; top 1% rank at Polaris School of Technology (Starex University) across all semesters with 9.17 cumulative CGPA.",
       category: "Academic",
     },
   ],
@@ -394,6 +428,10 @@ export const portfolioData: PortfolioData = {
       answer: "Sharad specializes in AI & Backend Engineering: building production-grade autonomous LLM agent systems, RAG vector pipelines with pgvector/Gemini, and high-throughput Node.js/Python microservices.",
     },
     {
+      question: "What is MacroPing?",
+      answer: "MacroPing (https://macroping.vercel.app/) is an AI-powered food tracking and coaching platform founded and built by Sharad. It enables gym-goers and fitness coaches to track meals by text or photo for instant calories, macros, and workout splits, plus a unified coach dashboard for client compliance.",
+    },
+    {
       question: "Is Sharad currently available for hiring?",
       answer: "Yes! Sharad is open to full-time roles, high-impact contract engineering, and founding engineer opportunities in AI Engineering, Backend Engineering, and Full-Stack AI roles.",
     },
@@ -403,7 +441,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       question: "What is Sharad's educational background and CGPA?",
-      answer: "Sharad is pursuing his B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University) with an exceptional CGPA of 9.17/10.",
+      answer: "Sharad is pursuing his B.Tech in Computer Science and Engineering at Polaris School of Technology (Starex University). He scored an outstanding 9.50 CGPA in his 6th semester and maintains an exceptional cumulative CGPA of 9.17/10.",
     },
   ],
   knowledgeChunks: [
@@ -412,8 +450,16 @@ export const portfolioData: PortfolioData = {
       title: "About Sharad Singh Kushwaha",
       sectionId: "about",
       category: "Profile",
-      content: "Sharad Singh Kushwaha is an AI & Backend Engineer and Co-founder of Infonix Cloud. He is pursuing B.Tech CSE at Polaris School of Technology (Starex University) with a 9.17/10 CGPA. He specializes in LLM agent workflows, vector retrieval with pgvector, scalable Python/Node backends, and full-stack software development.",
-      keywords: ["about", "bio", "education", "cgpa", "polaris", "starex", "infonix", "founder", "background"],
+      content: "Sharad Singh Kushwaha is an AI & Backend Engineer, Founder of MacroPing, and Co-founder of Infonix Cloud. He is pursuing B.Tech CSE at Polaris School of Technology (Starex University) with a 9.50 CGPA in 6th semester and a 9.17/10 cumulative CGPA. He specializes in LLM agent workflows, vector retrieval with pgvector, scalable Python/Node backends, and full-stack software development.",
+      keywords: ["about", "bio", "education", "cgpa", "polaris", "starex", "infonix", "macroping", "founder", "background"],
+    },
+    {
+      id: "chunk-startup-macroping",
+      title: "Startup: MacroPing (AI Food Tracking & Coaching Platform)",
+      sectionId: "projects",
+      category: "Startup",
+      content: "MacroPing (website: https://macroping.vercel.app/, LinkedIn: https://www.linkedin.com/company/144060088/): Founded and architected by Sharad. MacroPing is an AI-powered food tracking and coaching platform for gym-goers and fitness coaches. Users can track meals by text or photo to instantly get calories, macros, and workout splits, or coach every client from one centralized dashboard. Stack: Next.js, TypeScript, Multimodal AI Vision, Tailwind CSS, PostgreSQL, and Vercel.",
+      keywords: ["macroping", "startup", "founder", "food tracking", "fitness", "coaching", "nutrition", "calories", "macros", "workout splits", "gym"],
     },
     {
       id: "chunk-exp-infonix",
@@ -438,6 +484,14 @@ export const portfolioData: PortfolioData = {
       category: "Experience",
       content: "At PGT Global Network (Jul–Sep 2025, Full-Stack Intern): Sharad engineered an enterprise client management portal using React, TypeScript, and Tailwind CSS. He configured Supabase authentication, Row Level Security, and designed normalized relational database schemas with REST API integration.",
       keywords: ["pgt global", "intern", "supabase", "react", "typescript", "tailwind", "schema", "rest api"],
+    },
+    {
+      id: "chunk-project-macroping",
+      title: "Project: MacroPing",
+      sectionId: "projects",
+      category: "Projects",
+      content: "MacroPing: AI-powered food tracking and coaching platform for gym-goers and fitness coaches. Built with Next.js, TypeScript, Multimodal AI Vision, Tailwind CSS, PostgreSQL, and Vercel. Enables users to log meals via text or photo with instant calories and macros, while trainers manage client workout splits and weekly nutrition compliance from a single dashboard. Live at https://macroping.vercel.app/ (LinkedIn: https://www.linkedin.com/company/144060088/).",
+      keywords: ["macroping", "project", "food tracking", "fitness", "coaching", "calories", "macros", "gym"],
     },
     {
       id: "chunk-project-jobhunt",
@@ -481,11 +535,11 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: "chunk-project-villagerun",
-      title: "Project: Village Run 3D",
+      title: "Project: Neural Path Runner (Village Run 3D)",
       sectionId: "projects",
       category: "Projects",
-      content: "Village Run 3D: High-octane procedural 3D endless runner developed directly with WebGL and Three.js. Features custom physics collisions, procedural obstacle generation, spatial web audio, and runs at 60 FPS on low-power devices with a sub-2.5MB bundle.",
-      keywords: ["village run", "3d", "threejs", "webgl", "game", "runner", "physics"],
+      content: "Neural Path Runner (Village Run 3D): High-octane procedural 3D endless runner developed directly with WebGL and Three.js. Features custom physics collisions, procedural obstacle generation, spatial web audio, and runs at 60 FPS on low-power devices with a sub-2.5MB bundle.",
+      keywords: ["neural path runner", "neural path", "village run", "3d", "threejs", "webgl", "game", "runner", "physics", "60 fps"],
     },
     {
       id: "chunk-skills",
@@ -500,7 +554,7 @@ export const portfolioData: PortfolioData = {
       title: "Competitive Achievements & Academics",
       sectionId: "achievements",
       category: "Achievements",
-      content: "Achievements: Solved 500+ LeetCode problems demonstrating deep algorithmic proficiency. Runner-up in FCPL (Futuristic Coding & Programming League). Global Rank 1467 in CodeChef Starters 123. Maintained 9.17/10 CGPA at Polaris School of Technology. Led Polaris Innov-a-thon across 150+ high schools.",
+      content: "Achievements: Scored 9.50 CGPA in 6th semester and maintains a 9.17/10 cumulative CGPA at Polaris School of Technology (Starex University). Solved 500+ LeetCode problems demonstrating deep algorithmic proficiency. Runner-up in FCPL (Futuristic Coding & Programming League). Global Rank 1467 in CodeChef Starters 123. Led Polaris Innov-a-thon across 150+ high schools.",
       keywords: ["achievements", "leetcode", "codechef", "fcpl", "cgpa", "rank", "hackathon"],
     },
     {
@@ -516,7 +570,7 @@ export const portfolioData: PortfolioData = {
       title: "Sharad's LinkedIn Profile & Professional Network",
       sectionId: "contact",
       category: "Profile",
-      content: "Sharad's official LinkedIn profile is https://www.linkedin.com/in/sharad0203/. His profile details his journey as an AI & Backend Engineer, Co-founder of Infonix Cloud, academic excellence at Polaris School of Technology (9.17 CGPA), and event leadership for the Polaris Innov-a-thon across 150+ schools with Classplus.",
+      content: "Sharad's official LinkedIn profile is https://www.linkedin.com/in/sharad0203/. His profile details his journey as an AI & Backend Engineer, Founder of MacroPing (https://www.linkedin.com/company/144060088/), Co-founder of Infonix Cloud, academic excellence at Polaris School of Technology (9.50 6th Sem, 9.17 cumulative CGPA), and event leadership for the Polaris Innov-a-thon across 150+ schools with Classplus.",
       keywords: ["linkedin", "profile", "sharad0203", "social", "network", "connect", "experience", "url"],
     },
     {
@@ -524,7 +578,7 @@ export const portfolioData: PortfolioData = {
       title: "Academic Background & Schooling",
       sectionId: "about",
       category: "Education",
-      content: "Sharad is pursuing B.Tech CSE at Polaris School of Technology (Starex University) with a 9.17/10 CGPA (2023–2027). Before college, he studied at St. John's School in Tulsipur, Ghazipur, graduating with distinction in Science & Mathematics, where he first developed his passion for algorithmic problem solving and software development.",
+      content: "Sharad is pursuing B.Tech CSE at Polaris School of Technology (Starex University) with a stellar 9.50 CGPA in 6th semester and 9.17/10 cumulative CGPA (2023–2027). Before college, he studied at St. John's School in Tulsipur, Ghazipur, graduating with distinction in Science & Mathematics, where he first developed his passion for algorithmic problem solving and software development.",
       keywords: ["education", "school", "st johns", "ghazipur", "tulsipur", "polaris", "pst", "btech", "degree", "academic"],
     },
     {
@@ -534,6 +588,14 @@ export const portfolioData: PortfolioData = {
       category: "Competitive Programming",
       content: "Sharad's LeetCode profile is @sharadsingh0203 (https://leetcode.com/sharadsingh0203/). He has solved 500+ algorithmic challenges spanning Data Structures, Dynamic Programming, Graphs, and Greedy Algorithms. He also placed in the top tier globally in CodeChef Starters 123 (Rank 1467) and was runner-up in FCPL.",
       keywords: ["leetcode", "sharadsingh0203", "codechef", "dsa", "algorithms", "problem solving", "rating", "rank"],
+    },
+    {
+      id: "chunk-tech-news",
+      title: "Real-Time Tech Radar & Search Grounding",
+      sectionId: "technews",
+      category: "Tech Radar",
+      content: "Real-Time Tech Radar: Live technology news and ecosystem intelligence powered by Gemini 3.8 Flash with native Google Search Grounding. Delivers breaking updates on AI models, LLMs, open-source architectures, cloud infrastructure, and developer tooling, with verified citations directly linked to live web sources.",
+      keywords: ["tech news", "radar", "latest news", "breaking news", "gemini 3.8", "search grounding", "technews", "google search"],
     },
   ],
 };

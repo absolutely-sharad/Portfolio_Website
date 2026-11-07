@@ -143,8 +143,15 @@ Production-ready, Awwwards-caliber 3D portfolio and autonomous AI recruiter assi
 ### User Interactive Verification Points
 1. **Recruiter Mode**: Toggle between 3D immersive view and instant 2D high-density view.
 2. **Interactive 3D Cards**: Hover on project cards to test 3D perspective tilt, and click each to inspect the Problem → Solution → Stack modal.
-3. **Ask Sharad Assistant**:
+3. **Real-Time Tech Radar (Search Grounded)**:
+   - Live tech radar (`#technews`) grounded with `gemini-3.8-flash` and `tools: [{ googleSearch: {} }]`.
+   - Category filtering (`All Radar`, `AI & LLMs`, `Cloud & Systems`, `Web & Frameworks`, `Open Source`, `Dev Tools`).
+   - Dynamic search input for live queries on any model or technology.
+   - Verified search citations drawer linking directly to verified web sources.
+   - Web Speech API TTS audio briefing player integration.
+4. **Ask Sharad Assistant**:
    - Ask "What did Sharad build at Infonix Cloud?" -> Verifies RAG retrieval and source tags.
    - Ask "Show me his AI projects" -> Verifies `navigateTo('projects')` and `showCards` tool execution with chat chips.
    - Ask "Download his resume" -> Verifies `downloadResume()` tool action.
-4. **Contact & Resume Flow**: Submit test message in Contact form and verify 1-click resume print/PDF export.
+   - Ask "Latest tech news" -> Verifies `navigateTo('technews')`.
+5. **Contact & Resume Flow**: Submit test message in Contact form and verify 1-click resume print/PDF export.

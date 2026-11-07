@@ -3,6 +3,8 @@ import { portfolioData } from '../data/portfolio.ts';
 import { GraduationCap, Award, Compass, Cpu, Clock, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateReadingTime } from '../utils/readingTime.ts';
+import { LinkedInFeed } from './LinkedInFeed.tsx';
+import { SectionAudioButton } from './SectionAudioButton.tsx';
 
 export const AboutSection: React.FC = () => {
   const { personal, education } = portfolioData;
@@ -28,7 +30,7 @@ export const AboutSection: React.FC = () => {
   }, [education, personal]);
 
   return (
-    <section id="about" className="py-20 border-t border-white/[0.06] relative z-10">
+    <section id="about" className="py-20 border-t border-zinc-200/80 dark:border-white/[0.08] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading with clean metadata & reading time */}
         <motion.div
@@ -39,17 +41,20 @@ export const AboutSection: React.FC = () => {
           className="mb-12"
         >
           <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
-            <div className="text-xs font-semibold tracking-wider text-[#38BDF8] uppercase">
+            <div className="text-xs font-semibold tracking-wider text-blue-600 dark:text-blue-400 uppercase font-mono">
               01 · Background & Education
             </div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-slate-400">
-              <Clock className="w-3.5 h-3.5 text-[#38BDF8]" />
-              <span className="text-slate-300 font-medium">{readingTime.text}</span>
-              <span className="text-slate-600">·</span>
-              <span className="text-slate-500">{readingTime.words} words</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <SectionAudioButton sectionId="about" label="Listen to Summary" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-white/[0.04] border border-zinc-200 dark:border-white/[0.08] text-xs font-mono text-zinc-600 dark:text-zinc-400">
+                <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                <span className="font-medium text-zinc-800 dark:text-zinc-200">{readingTime.text}</span>
+                <span className="text-zinc-400">·</span>
+                <span className="text-zinc-500">{readingTime.words} words</span>
+              </div>
             </div>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
             Engineering Rigor & Entrepreneurial Drive
           </h2>
         </motion.div>
@@ -61,16 +66,16 @@ export const AboutSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            className="lg:col-span-7 space-y-6 text-slate-300 leading-relaxed text-base sm:text-lg"
+            className="lg:col-span-7 space-y-6 text-zinc-600 dark:text-zinc-300 leading-relaxed text-base sm:text-lg"
           >
             <p>
-              I am an AI & Backend Engineer focused on closing the gap between cutting-edge LLM capabilities and resilient, low-latency production systems. As Co-founder of Infonix Cloud, I build autonomous customer agents, document pipelines, and scalable microservices that businesses rely on daily.
+              I am an AI & Backend Engineer focused on closing the gap between cutting-edge LLM capabilities and resilient, low-latency production systems. As Founder of MacroPing and Co-founder of Infonix Cloud, I build autonomous customer agents, multimodal AI nutrition platforms, and scalable microservices that users and businesses rely on daily.
             </p>
             <p>
               My engineering philosophy centers on measurable impact over vanity demos: every model integration must improve throughput, reduce operational overhead, or eliminate customer friction. Whether orchestrating multi-agent tool loops or architecting distributed PostgreSQL databases with vector indexing, I prioritize deterministic reliability and clean API boundaries.
             </p>
-            <p className="text-slate-400 text-base">
-              Outside of building client infrastructure and training RAG pipelines, I actively grind algorithmic challenges (500+ LeetCode problems solved on <span className="text-slate-300 font-mono">@sharadsingh0203</span>) and mentor aspiring student developers through collegiate hackathons and tech initiatives.
+            <p className="text-zinc-500 dark:text-zinc-400 text-base">
+              Outside of building client infrastructure and training RAG pipelines, I actively grind algorithmic challenges (500+ LeetCode problems solved on <span className="font-mono text-zinc-800 dark:text-zinc-200">@sharadsingh0203</span>) and mentor aspiring student developers through collegiate hackathons and tech initiatives.
             </p>
 
             {/* Core Values / Focus Pillars */}
@@ -80,13 +85,13 @@ export const AboutSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.2 }}
-                className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-[#38BDF8]/30 transition-colors"
+                className="p-4 rounded-xl bg-white dark:bg-[#131519] border border-zinc-200/80 dark:border-white/[0.08] shadow-sm hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
               >
-                <div className="flex items-center gap-2 text-white font-semibold text-sm mb-1.5">
-                  <Cpu className="w-4 h-4 text-[#38BDF8]" />
+                <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-semibold text-sm mb-1.5">
+                  <Cpu className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>Agentic Systems & RAG</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                   Building deterministic tool-calling workflows, hybrid vector/BM25 retrieval, and hallucination guardrails.
                 </p>
               </motion.div>
@@ -96,13 +101,13 @@ export const AboutSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.3 }}
-                className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-[#38BDF8]/30 transition-colors"
+                className="p-4 rounded-xl bg-white dark:bg-[#131519] border border-zinc-200/80 dark:border-white/[0.08] shadow-sm hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
               >
-                <div className="flex items-center gap-2 text-white font-semibold text-sm mb-1.5">
-                  <Compass className="w-4 h-4 text-[#38BDF8]" />
+                <div className="flex items-center gap-2 text-zinc-900 dark:text-white font-semibold text-sm mb-1.5">
+                  <Compass className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <span>Production Backends</span>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                   High-throughput REST/GraphQL APIs, rate-limiting middlewares, Redis caching, and normalized schema design.
                 </p>
               </motion.div>
@@ -118,37 +123,37 @@ export const AboutSection: React.FC = () => {
             className="lg:col-span-5 space-y-5"
           >
             {/* Primary Degree Card */}
-            <div className="p-6 sm:p-7 rounded-2xl bg-[#0E1217] border border-white/[0.08] relative overflow-hidden shadow-xl shadow-black/40 hover:border-[#38BDF8]/30 transition-all">
+            <div className="p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#131519] border border-zinc-200/80 dark:border-white/[0.08] shadow-sm relative overflow-hidden transition-all">
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
-                  <div className="flex items-center gap-2 text-[#38BDF8] text-xs font-semibold mb-1">
+                  <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 text-xs font-semibold mb-1">
                     <GraduationCap className="w-4 h-4" />
                     <span>Degree Program</span>
                   </div>
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
                     {education.degree}
                   </h3>
-                  <div className="text-sm text-slate-400 mt-0.5">
+                  <div className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
                     {education.institution}
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-2xl font-extrabold text-[#38BDF8] font-mono tabular-nums">
+                  <div className="inline-block px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-sm sm:text-base font-extrabold text-blue-600 dark:text-blue-400 font-mono tabular-nums">
                     {education.grade}
                   </div>
-                  <div className="text-[11px] text-slate-400 font-mono">
+                  <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono mt-1">
                     {education.period}
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/[0.08] space-y-3">
-                <div className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              <div className="pt-4 border-t border-zinc-200/80 dark:border-white/[0.08] space-y-3">
+                <div className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
                   Academic Milestones
                 </div>
                 {education.highlights.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                    <Award className="w-3.5 h-3.5 text-[#38BDF8] shrink-0 mt-0.5" />
+                  <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-600 dark:text-zinc-300">
+                    <Award className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                     <span className="leading-relaxed">{item}</span>
                   </div>
                 ))}
@@ -156,24 +161,27 @@ export const AboutSection: React.FC = () => {
 
               {/* Secondary School Foundation */}
               {education.secondary && (
-                <div className="mt-4 pt-4 border-t border-white/[0.08]">
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-300 mb-1">
-                    <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                <div className="mt-4 pt-4 border-t border-zinc-200/80 dark:border-white/[0.08]">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
+                    <BookOpen className="w-3.5 h-3.5 text-zinc-500" />
                     <span>Foundation: {education.secondary.institution}</span>
                   </div>
-                  <div className="text-xs text-slate-400 leading-relaxed">
+                  <div className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                     {education.secondary.qualification} · {education.secondary.location}. {education.secondary.highlights}
                   </div>
                 </div>
               )}
 
-              <div className="mt-5 pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs text-slate-400">
+              <div className="mt-5 pt-4 border-t border-zinc-200/80 dark:border-white/[0.08] flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
                 <span>Location: {personal.location.split('(')[0].trim()}</span>
-                <span className="text-[#38BDF8] font-medium">B.Tech Honors Track</span>
+                <span className="text-blue-600 dark:text-blue-400 font-medium">B.Tech Honors Track</span>
               </div>
             </div>
           </motion.div>
         </div>
+
+        {/* Live LinkedIn Activity & Professional Insights Feed */}
+        <LinkedInFeed />
       </div>
     </section>
   );

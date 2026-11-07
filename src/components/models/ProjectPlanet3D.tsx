@@ -215,7 +215,7 @@ export const ProjectPlanet3D: React.FC<ProjectPlanet3DProps> = ({
       group.add(shield);
       disposables.push(shieldGeo, shieldMat);
     } else {
-      // 6. Village Run 3D: High-Speed WebGL Monolith & Portal
+      // 6. Neural Path Runner: High-Speed WebGL Monolith & Quantum Speeder
       const monolithGeo = new THREE.ConeGeometry(0.9, 1.8, 5);
       const monolithMat = new THREE.MeshStandardMaterial({
         color: 0xb45309,

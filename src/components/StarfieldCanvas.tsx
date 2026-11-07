@@ -19,7 +19,7 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
 
     // 1. Scene setup
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(isLight ? 0xf8fafc : 0x08090c, isLight ? 0.0015 : 0.0012);
+    scene.fog = new THREE.FogExp2(isLight ? 0xfaf9f5 : 0x0b0c0e, isLight ? 0.0016 : 0.0014);
 
     const camera = new THREE.PerspectiveCamera(
       60,
@@ -40,15 +40,15 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     container.appendChild(renderer.domElement);
 
     // 3. Create particles
-    const particleCount = prefersReducedMotion ? 600 : (isLight ? 1200 : 1800);
+    const particleCount = prefersReducedMotion ? 400 : (isLight ? 700 : 1100);
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
 
-    const cyanColor = new THREE.Color(isLight ? 0x0284c7 : 0x38bdf8);
-    const whiteColor = new THREE.Color(isLight ? 0x0f172a : 0xf1f5f9);
-    const faintBlueColor = new THREE.Color(isLight ? 0x64748b : 0x94a3b8);
+    const accentCobalt = new THREE.Color(isLight ? 0x2563eb : 0x3b82f6);
+    const neutralSilver = new THREE.Color(isLight ? 0x71717a : 0xe4e4e7);
+    const neutralMuted = new THREE.Color(isLight ? 0xa1a1aa : 0x52525b);
 
     for (let i = 0; i < particleCount; i++) {
       // Distribute in a spherical cylinder cloud
@@ -61,20 +61,20 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
       positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       positions[i3 + 2] = (Math.random() - 0.5) * 800;
 
-      // Color distribution
+      // Color distribution: 80% neutral silver/stone, 20% subtle cobalt accent
       const colorRand = Math.random();
-      let chosenColor = faintBlueColor;
-      if (colorRand < 0.25) {
-        chosenColor = cyanColor;
-      } else if (colorRand > 0.75) {
-        chosenColor = whiteColor;
+      let chosenColor = neutralMuted;
+      if (colorRand < 0.20) {
+        chosenColor = accentCobalt;
+      } else if (colorRand > 0.50) {
+        chosenColor = neutralSilver;
       }
 
       colors[i3] = chosenColor.r;
       colors[i3 + 1] = chosenColor.g;
       colors[i3 + 2] = chosenColor.b;
 
-      sizes[i] = Math.random() * 2.2 + 0.8;
+      sizes[i] = Math.random() * 1.8 + 0.6;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -89,13 +89,13 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     if (ctx) {
       const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
       if (isLight) {
-        grad.addColorStop(0, 'rgba(15, 23, 42, 0.95)');
-        grad.addColorStop(0.35, 'rgba(2, 132, 199, 0.7)');
-        grad.addColorStop(1, 'rgba(2, 132, 199, 0)');
+        grad.addColorStop(0, 'rgba(18, 19, 22, 0.7)');
+        grad.addColorStop(0.4, 'rgba(113, 113, 122, 0.35)');
+        grad.addColorStop(1, 'rgba(113, 113, 122, 0)');
       } else {
-        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        grad.addColorStop(0.3, 'rgba(56, 189, 248, 0.8)');
-        grad.addColorStop(1, 'rgba(56, 189, 248, 0)');
+        grad.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
+        grad.addColorStop(0.35, 'rgba(212, 212, 216, 0.35)');
+        grad.addColorStop(1, 'rgba(212, 212, 216, 0)');
       }
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 16, 16);
@@ -103,11 +103,11 @@ export const StarfieldCanvas: React.FC<StarfieldCanvasProps> = ({ interactive = 
     const texture = new THREE.CanvasTexture(canvas);
 
     const material = new THREE.PointsMaterial({
-      size: isLight ? 2.2 : 2.5,
+      size: isLight ? 1.8 : 2.0,
       map: texture,
       vertexColors: true,
       transparent: true,
-      opacity: isLight ? 0.6 : 0.85,
+      opacity: isLight ? 0.45 : 0.65,
       blending: isLight ? THREE.NormalBlending : THREE.AdditiveBlending,
       depthWrite: false,
     });
