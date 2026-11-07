@@ -5,6 +5,7 @@ import { ProjectModal } from './ProjectModal.tsx';
 import { ProjectPlanet3D } from './models/ProjectPlanet3D.tsx';
 import { motion } from 'framer-motion';
 import { SectionAudioButton } from './SectionAudioButton.tsx';
+import { CopyButton } from './common/CopyButton.tsx';
 
 interface TiltCardProps {
   project: Project;
@@ -159,39 +160,57 @@ const TiltCard: React.FC<TiltCardProps> = ({
           )}
         </div>
 
-        {/* Links & Direct Arcade Launcher */}
+        {/* Project Action Links with Copy Utilities */}
         <div className="flex items-center justify-between pt-2">
-          <div className="flex items-center gap-3">
-            <a
-              href={project.liveDemo}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline transition-colors"
-            >
-              <span>Live Demo</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <div className="flex items-center gap-1">
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 text-xs font-semibold text-[#6366F1] dark:text-[#818CF8] hover:underline transition-colors"
+                title={`Visit ${project.title} live`}
+              >
+                <span>Live Demo</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <CopyButton
+                text={project.liveDemo}
+                title="Copy Live Demo URL to clipboard"
+                successLabel="Copied!"
+              />
+            </div>
+
             <span aria-hidden="true" className="text-zinc-300 dark:text-zinc-600">·</span>
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
-            >
-              {project.github.includes('linkedin.com') ? (
-                <>
-                  <Linkedin className="w-3 h-3 text-[#0A66C2]" />
-                  <span>Company</span>
-                </>
-              ) : (
-                <>
-                  <Github className="w-3 h-3" />
-                  <span>GitHub</span>
-                </>
-              )}
-            </a>
+
+            <div className="flex items-center gap-1">
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                title={`View ${project.title} on ${project.github.includes('linkedin.com') ? 'LinkedIn' : 'GitHub'}`}
+              >
+                {project.github.includes('linkedin.com') ? (
+                  <>
+                    <Linkedin className="w-3 h-3 text-[#0A66C2]" />
+                    <span>Company</span>
+                  </>
+                ) : (
+                  <>
+                    <Github className="w-3 h-3" />
+                    <span>GitHub</span>
+                  </>
+                )}
+              </a>
+              <CopyButton
+                text={project.github}
+                title="Copy Repository URL to clipboard"
+                successLabel="Copied!"
+              />
+            </div>
           </div>
 
           {isRunnerGame && onLaunchGame && (
@@ -201,12 +220,41 @@ const TiltCard: React.FC<TiltCardProps> = ({
                 e.stopPropagation();
                 onLaunchGame();
               }}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 font-semibold text-xs shadow-sm hover:scale-[1.02] transition-all"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#6366F1] text-white font-semibold text-xs shadow-sm hover:scale-[1.02] transition-all shrink-0"
             >
               <Sparkles className="w-3 h-3" />
               <span>3D Runner</span>
             </button>
           )}
+        </div>
+
+        {/* Quick Clone / Terminal Snippet with 1-Click Copy Utility */}
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="mt-3.5 px-2.5 py-1.5 rounded-lg bg-zinc-100/90 dark:bg-black/40 border border-zinc-200/80 dark:border-white/5 flex items-center justify-between gap-2 font-mono text-[11px]"
+        >
+          <div className="flex items-center gap-1.5 truncate text-zinc-600 dark:text-zinc-400">
+            <span className="text-[#6366F1] font-bold select-none text-xs">$</span>
+            <span className="truncate select-all">
+              {project.github.includes('github.com')
+                ? `git clone ${project.github}.git`
+                : project.liveDemo}
+            </span>
+          </div>
+          <CopyButton
+            text={
+              project.github.includes('github.com')
+                ? `git clone ${project.github}.git`
+                : project.liveDemo
+            }
+            title={
+              project.github.includes('github.com')
+                ? 'Copy git clone command'
+                : 'Copy Project URL'
+            }
+            label="Copy"
+            variant="badge"
+          />
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ const rateLimiter = (req: express.Request, res: express.Response, next: express.
 
 
 // Initialize Google Gen AI Client if API key is present
-const apiKey = process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY || process.env.API_KEY;
 let aiClient: GoogleGenAI | null = null;
 if (apiKey) {
   aiClient = new GoogleGenAI({
@@ -602,7 +602,7 @@ function getTopicCitations(topic: string): GroundingCitation[] {
   ];
 }
 
-app.get('/api/tech-news', rateLimiter, async (req, res) => {
+app.get('/api/tech-news', async (req, res) => {
   const topic = (req.query.topic as string) || 'All';
   const refresh = req.query.refresh === 'true';
   const cacheKey = topic.toLowerCase().trim();
@@ -668,13 +668,19 @@ Provide 6 distinct, highly relevant stories. Output only the JSON markdown block
 
     let response: any;
     try {
-      response = await aiClient.models.generateContent({
+      const generatePromise = aiClient.models.generateContent({
         model: 'gemini-3.8-flash',
         contents: prompt,
         config: {
           tools: [{ googleSearch: {} }],
         },
       });
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Search grounding timeout after 6s')), 6000)
+      );
+
+      response = await Promise.race([generatePromise, timeoutPromise]);
     } catch (apiErr: any) {
       const isQuota = handleGeminiQuotaError(apiErr, '/api/tech-news');
       if (!isQuota) {
