@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Zap, Sun, Moon, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Zap, Sun, Moon, Menu, X, ArrowUpRight, Box } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.tsx';
 import { NAV_SECTIONS, SectionRoute } from '../hooks/useScrollSpy.ts';
 
@@ -21,6 +21,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeSectionId = 'hero',
   onNavigateToSection,
   onOpenResumeModal,
+  onOpenModelInspector,
 }) => {
   const { toggleTheme, isLight } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -120,6 +121,24 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
+          {/* 3D Model Studio Trigger */}
+          {onOpenModelInspector && (
+            <button
+              type="button"
+              onClick={onOpenModelInspector}
+              className={`hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-lg transition-all border shrink-0 focus:outline-none focus:ring-2 focus:ring-[#6366F1]/30 ${
+                isLight
+                  ? 'bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 border-zinc-200'
+                  : 'bg-white/[0.05] hover:bg-[#6366F1]/20 text-zinc-300 hover:text-white border-white/10 hover:border-[#6366F1]/30'
+              }`}
+              title="Open full-bleed 3D Studio & Procedural Scene Explorer"
+              aria-label="Open 3D Studio"
+            >
+              <Box className="w-3.5 h-3.5 text-[#14B8A6]" />
+              <span>3D Studio</span>
+            </button>
+          )}
+
           {/* Recruiter Mode Toggle */}
           <button
             type="button"
@@ -189,15 +208,34 @@ export const Navbar: React.FC<NavbarProps> = ({
               );
             })}
 
-            {onOpenResumeModal && (
+            {onOpenModelInspector && (
               <div className="pt-2 border-t border-zinc-200 dark:border-white/10 mt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenModelInspector();
+                  }}
+                  className="w-full flex items-center justify-between py-2 px-3 text-xs font-semibold text-white bg-[#6366F1] rounded-xl transition-all shadow-sm mb-1.5"
+                >
+                  <span className="flex items-center gap-2">
+                    <Box className="w-3.5 h-3.5 text-[#14B8A6]" />
+                    <span>Open 3D Studio & Inspector</span>
+                  </span>
+                  <span className="text-[10px] font-mono bg-black/25 px-2 py-0.5 rounded">Three.js PBR</span>
+                </button>
+              </div>
+            )}
+
+            {onOpenResumeModal && (
+              <div className={onOpenModelInspector ? '' : 'pt-2 border-t border-zinc-200 dark:border-white/10 mt-2'}>
                 <button
                   type="button"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenResumeModal();
                   }}
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-white bg-zinc-900 dark:bg-[#6366F1] rounded-xl transition-all shadow-sm"
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-zinc-900 dark:text-white bg-zinc-100 dark:bg-white/[0.08] hover:bg-zinc-200 rounded-xl transition-all border border-zinc-200 dark:border-white/10"
                 >
                   <span>Open ATS Resume PDF</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

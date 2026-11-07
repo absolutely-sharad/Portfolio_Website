@@ -22,7 +22,6 @@ import { KeyboardShortcutsModal } from './components/KeyboardShortcutsModal.tsx'
 import { FloatingAudioPlayer } from './components/FloatingAudioPlayer.tsx';
 import { ThemeProvider, useTheme } from './context/ThemeContext.tsx';
 import { TTSProvider } from './context/TTSContext.tsx';
-import { ScrollSpyMargin } from './components/ScrollSpyMargin.tsx';
 import { useScrollSpy } from './hooks/useScrollSpy.ts';
 
 function MainPortfolio() {
@@ -137,12 +136,6 @@ function MainPortfolio() {
       {/* Subtle Scroll Progress Indicator Bar at top of viewport */}
       <ScrollProgressBar recruiterMode={recruiterMode} />
 
-      {/* Subtle Viewport Margin Scroll-Spy Tracker */}
-      <ScrollSpyMargin
-        activeId={activeId}
-        onNavigate={handleNavigateToSection}
-        recruiterMode={recruiterMode}
-      />
 
       {/* 3D Interactive Starfield (Hidden when in Recruiter Mode for maximum 2D reading speed) */}
       {!recruiterMode && <StarfieldCanvas interactive={true} isLight={isLight} />}

@@ -144,18 +144,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className="lg:col-span-5 relative"
           >
             <div className="relative rounded-3xl bg-white/80 dark:bg-[#131519]/80 backdrop-blur-xl border border-zinc-200/80 dark:border-white/10 p-2 overflow-hidden shadow-lg dark:shadow-2xl">
-              {/* Coordinated Top Header Bar: Prevents any element collision or text overlap */}
-              <div className="absolute top-3 left-3 sm:left-4 right-3 sm:right-4 flex flex-wrap items-center justify-between gap-2 z-20 pointer-events-none">
-                <div className="flex items-center gap-2 text-xs font-mono text-zinc-600 dark:text-zinc-400 bg-white/90 dark:bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-md border border-zinc-200 dark:border-white/10 pointer-events-auto">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                  <span className="text-zinc-900 dark:text-zinc-100 font-semibold">3D NEURAL CORE</span>
+              {/* Coordinated Top Header Bar: Clean single-line layout, solid styling, zero text overlap */}
+              <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between gap-2 z-20 pointer-events-none">
+                <div className="flex items-center gap-2 text-xs font-mono text-zinc-700 dark:text-zinc-300 bg-white dark:bg-[#0E1217] px-3 py-1 rounded-lg border border-zinc-200 dark:border-white/10 shadow-sm pointer-events-auto">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#14B8A6]" />
+                  <span className="text-zinc-900 dark:text-zinc-100 font-semibold text-[11px] tracking-wide">3D HOLOGRAPHIC CORE</span>
                   <span className="text-zinc-400 hidden sm:inline">·</span>
-                  <span className="text-[11px] text-zinc-500 hidden sm:inline">WebGL PBR</span>
+                  <span className="text-[10px] text-zinc-500 hidden sm:inline">WebGL Studio PBR</span>
                 </div>
 
                 <div className="flex items-center gap-2 pointer-events-auto">
-                  <div className="hidden xs:flex sm:flex items-center gap-1 text-[10px] text-zinc-600 dark:text-zinc-400 font-mono bg-white/90 dark:bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-md border border-zinc-200 dark:border-white/10">
-                    <Sparkles className="w-3 h-3 text-blue-500" />
+                  <div className="hidden xs:flex sm:flex items-center gap-1.5 text-[10px] text-zinc-600 dark:text-zinc-400 font-mono bg-white dark:bg-[#0E1217] px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-white/10 shadow-sm">
+                    <Sparkles className="w-3 h-3 text-[#6366F1]" />
                     <span>Drag to Orbit</span>
                   </div>
 
@@ -163,9 +163,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <button
                       type="button"
                       onClick={onOpenModelInspector}
-                      className="text-[11px] font-mono text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/15 hover:bg-blue-100 dark:hover:bg-blue-500/25 px-2.5 py-0.5 rounded-md border border-blue-200 dark:border-blue-500/30 transition-colors shrink-0"
+                      className="text-[11px] font-mono text-white bg-[#6366F1] hover:bg-[#4F46E5] px-3 py-1 rounded-lg shadow-sm hover:shadow-[0_0_12px_rgba(99,102,241,0.4)] transition-all shrink-0 font-medium flex items-center gap-1"
+                      title="Open full-bleed 3D Studio & Procedural Model Inspector"
                     >
-                      3D Studio ↗
+                      <span>3D Studio</span>
+                      <span>↗</span>
                     </button>
                   )}
                 </div>
